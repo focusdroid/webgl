@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            background: gray;
+            margin: 50px auto 0;
+            display: block;
+            background: yellow;
+        }
+        </style>
+    </head>
+    <body>
+    <canvas id="canvas" width="400" height="400"></canvas>
+    </body>
+</html>
+<script src="../lib/index.js"></script>
+<script>
+    let canvas = document.getElementById('canvas')
+    let gl = canvas.getContext('webgl')
+    
+    const VERTEX_SHADER_SOURCE = `
+    // 声明attribute变量,只传递顶点数据(不能再片元着色器中使用)
+    attribute vec4 aPosition;
+    uniform mat4 mat;
+    // 必须存在main函数
+        void main(){
+            // 绘制点的坐标
+            gl_Position = mat * aPosition;
+
+            // gl_Position = vec4(aPosition.x * aScale, aPosition.y * aScale, aPosition.z * aScale,1.0); // vec4(1.0,0.0,0.0,1.0)
+            // 点的大小
+            gl_PointSize = 10.0; // 只有绘制点的时候生效
+        }
+    `
+    // 片元着色器
+    // vec4(0.0,0.0,0.0,1.0) r g b a 
+    const FRAGMENT_SHADER_SOURCE = `
+    // 使用uniform控制颜色
+    // 指定精度
+    precision mediump float;
+    // uniform vec4 uColor;
+    // uniform vec3 uColor;
+    uniform vec2 uColor;
+    // uniform float uColor;
+        void main () {
+           gl_FragColor = vec4(uColor.r, uColor.g, 0.4,1.0); // vec4(1.0,0.0,0.0,1.0);
+        //    gl_FragColor = vec4(uColor, 0.0, 0.0,1.0); // uniform float uColor;  gl.uniform1f(uColor, 1.0)
+        //    gl_FragColor = uColor; // vec4(1.0,0.0,0.0,1.0);
+
+        }
+    `
+    // 执行绘制
+    // 绘制的图形，从那个开始，使用几个顶点
+    const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE)
+
+    const aPosition = gl.getAttribLocation(program, 'aPosition')
+    const mat = gl.getUniformLocation(program, 'mat')
+
+    // 缓冲区对象
+    const points = new Float32Array([
+        -0.5,-0.5,
+        0.5,-0.5,
+        0.0,0.5,
+    ])
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    gl.bufferData(gl.ARRAY_BUFFER,points, gl.STATIC_DRAW)
+
+    const BYTES = points.BYTES_PER_ELEMENT;
+
+    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0)
+    gl.enableVertexAttribArray(aPosition)
+let eyey = 0
+    function animation () {
+        eyey += 0.01;
+        if (eyey > 1) {
+            eyey = -0.1
+        }
+        const vm = getViewMatix(0.0,eyey,0.2,0.0,0.0,0.0,0.0,0.6,0.0)
+
+        // const matrix = getTranslateMatrix(x, x, x)
+        // gl.vertexAttrib1f(aTranslate, x)
+        // gl.uniformMatrix4fv(mat, false, matrix)
+        gl.uniformMatrix4fv(mat, false, vm)
+        gl.drawArrays(gl.TRIANGLES,0,3)
+        requestAnimationFrame(animation)
+    }
+
+    
+    animation()
+
+
+</script>

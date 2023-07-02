@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            /*background: gray;*/
+            margin: 50px auto 0;
+            display: block;
+            /*background: yellow;*/
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+</body>
+</html>
+<script src="../lib/index.js"></script>
+<script>
+  let ctx = document.getElementById('canvas')
+  let gl = ctx.getContext('webgl')
+  const VERTEX_SHADER_SOURCE = `
+    void main(){
+        gl_Position = vec4(0.0,0.0,0.0,1.0);
+        gl_PointSize = 100.0;
+    }
+    `;
+  // 片元着色器
+  const FRAGMENT_SHADER_SOURCE = `
+        precision lowp float; // 设置片元着色器精度
+        void main () {
+            // 计算距离
+            float dis = distance(gl_PointCoord, vec2(0.5,0.5));
+            if (dis > 0.5 || (dis < 0.4 && dis > 0.3) || dis < 0.2) { // 绘制圆形  dis < 0.4 圆环
+                discard;
+            }
+            gl_FragColor = vec4(1.0,0.0,0.0,1.0);
+        }
+    `;
+  // 执行绘制
+  // 绘制的图形，从那个开始，使用几个顶点
+  const program = initShader(gl, VERTEX_SHADER_SOURCE, FRAGMENT_SHADER_SOURCE)
+  gl.drawArrays(gl.POINTS, 0, 1)
+</script>
