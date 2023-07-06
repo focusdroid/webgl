@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {margin: 0;padding: 0; }
+    </style>
+    <script src="../lib/three/three.js"></script>
+    <script src="../lib/three/OBJLoader.js"></script>
+    <script src="../lib/three/MTLLoader.js"></script>
+    <script src="../lib/three/OBJMTLLoader.js"></script>
+<!--    轨迹球控件-->
+    <script src="../lib/three/TrackballControls.js"></script>
+<!--    第一人称控件-->
+    <script src="../lib/three/FirstPersonControls.js"></script>
+<!--    飞行控件-->
+    <script src="../lib/three/FlyControls.js"></script>
+<!--    翻滚控件-->
+    <script src="../lib/three/RollControls.js"></script>
+<!--    轨道控件-->
+    <script src="../lib/three/OrbitControls.js"></script>
+</head>
+<body>
+</body>
+</html>
+<script>
+  const  clock = new THREE.Clock()
+  // 创建一个场景
+  const scene = new THREE.Scene()
+  // 创建一个相机 ， 视点 （眼睛）
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 1000)
+  // 设置相机的位置
+  // camera.position.set(0,300,400)
+  camera.position.set(100,100,0)
+  camera.lookAt(new THREE.Vector3(0,0,0)); // 加载文件，必须将相机聚焦到场景上
+
+  // const trackball = new THREE.TrackballControls(camera) // 轨迹球控件
+  // const firstPerson = new THREE.FirstPersonControls(camera) // 第一人称控件
+  // firstPerson.lookSpeed = 0.2
+  // const fly = new THREE.FlyControls(camera) // 飞行控件
+  // fly.rollSpeed = 0.3
+  // const roll = new THREE.RollControls(camera) // 翻滚控件
+  // roll.lookSpeed = 0.4
+  // roll.rollSpeed = 0.4
+  const ort = new THREE.OrbitControls(camera) // 轨道控件
+  // 创建渲染器
+  const renderer = new THREE.WebGLRenderer();
+  // 设置渲染器尺寸
+  renderer.setSize(window.innerWidth, window.innerHeight)
+  document.body.appendChild(renderer.domElement)
+  // 添加灯光,光源
+  const spotLight = new THREE.SpotLight(0xffffff);
+  spotLight.position.set(2000, 6000, 8000)
+  scene.add(spotLight)
+
+  const loader = new THREE.OBJMTLLoader()
+  loader.load('../models/city.obj', '../models/city.mtl', (mesh) => {
+    scene.add(mesh)
+  })
+
+  const animation = () => {
+    // trackball.update()
+    // firstPerson.update(clock.getDelta())
+    // fly.update(clock.getDelta())
+    // roll.update(clock.getDelta())
+    ort.update(clock.getDelta())
+    renderer.render(scene, camera)
+    requestAnimationFrame(animation)
+  }
+  animation()
+</script>
