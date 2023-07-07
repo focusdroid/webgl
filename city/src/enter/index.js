@@ -9,8 +9,8 @@ export const initCity = () => {
   // 创建场景
   const scene = new THREE.Scene()
   // 创建相机
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000000)
-  camera.position.set(100000,50000,1000)
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500000)
+  camera.position.set(1000000,200000,160000)
   scene.add(camera)
 
   // 添加相机控件
@@ -28,7 +28,7 @@ export const initCity = () => {
   scene.add(new THREE.AmbientLight(0xadadad))
   // 添加平行光
   const directionLight = new THREE.DirectionalLight(0xffffff)
-  directionLight.position.set(1000,100000,0)
+  directionLight.position.set(100,100,0)
   scene.add(directionLight)
 
 /*  const box = new THREE.BoxGeometry(2,2,2) // 创建图形

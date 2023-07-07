@@ -11,7 +11,7 @@ export class SurroundLine {
     // 有一个头部颜色，最顶部显示的颜色
     this.headerColor = color.head
     // 高度差
-    this.size = 180
+    this.size = 1800
     this.createMesh()
     // 创建外层线条（所有建筑物线框模型）
     this.createLine()

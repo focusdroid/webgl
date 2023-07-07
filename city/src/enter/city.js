@@ -3,7 +3,8 @@ import * as THREE from 'three'
 import * as TWEEN from '@tweenjs/tween.js'
 import { SurroundLine } from '../effect/surroundLine'
 import { Backgound } from '../effect/backgound'
-// import {TWEEN} from "three/examples/jsm/libs/tween.module.min";
+import {Radar} from '../effect/radar'
+import { Wall } from '../effect/wall'
 export class City{
   constructor(scene, camera) {
     this.scene = scene
@@ -32,6 +33,8 @@ export class City{
   }
   initEffect () { // 初始化天空
     new Backgound(this.scene)
+    new Radar(this.scene, this.time)
+    new Wall(this.scene, this.time)
     this.addClick()
   }
   addClick () {
