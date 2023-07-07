@@ -54,10 +54,9 @@ console.log('scene', scene)
       scene.add(obj)
     })
   }*/
-
-
+  const clock = new THREE.Clock()
   const start = () => {
-    city.start()
+    city.start(clock.getDelta())
     controls.update()
     // 渲染操作
     renderer.render(scene,camera)

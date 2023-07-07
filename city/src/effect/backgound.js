@@ -2,7 +2,8 @@ import * as THREE from 'three'
 export class Backgound {
   constructor(scene) {
     this.scene = scene
-    this.url = '../../src/assets/white-bg.jpg'
+    // this.url = '../../src/assets/white-bg.jpg'
+    this.url = '../../src/assets/block-bg.jpg'
     this.init()
   }
   // 创建天空盒子

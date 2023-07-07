@@ -1,10 +1,11 @@
 import * as THREE from "three";
 import { color } from '../config'
 export class SurroundLine {
-  constructor(scene, child, height) {
+  constructor(scene, child, height, time) {
     this.height = height
     this.scene = scene
     this.child = child
+    this.time = time
     // 需要一个模型颜色
     this.meshColor = color.mesh
     // 有一个头部颜色，最顶部显示的颜色
@@ -83,22 +84,58 @@ export class SurroundLine {
     const geometry = new THREE.EdgesGeometry(this.child.geometry)
     // api创建
     // const material = new THREE.LineBasicMaterial({color: color.soundLine})
+    const { max, min } = this.child.geometry.boundingBox
     // 自定义线条创建
     const material = new THREE.ShaderMaterial({
       uniforms: {
         line_color: {
           value: new THREE.Color(color.soundLine)
+        },
+        u_time: this.time,
+        u_max: {
+          value: max
+        },
+        u_min: {
+          value: min
+        },
+        live_color: { // 扫描的颜色
+          value: new THREE.Color(color.liveColor)
         }
       },
       vertexShader: `
+      // 一个不断变化的值，u_height, u_time
+      // 扫描的颜色
+      // 扫光的颜色
+      uniform float u_time;
+      uniform vec3 live_color; 
+      uniform vec3 line_color; 
+      uniform vec3 u_max; 
+      uniform vec3 u_min; 
+      
+      varying vec3 v_color;
         void main(){
+        float new_time = mod(u_time * 0.1, 1.0);
+        // 扫描位置
+        float rangeY = mix(u_min.y, u_max.y, new_time);
+        
+        // 当前在这个区间内，显示扫描光带
+        if (rangeY < position.y && rangeY > position.y - 200.0) {
+          float f_index = 1.0 - sin((position.y - rangeY) / 200.0 * 3.14);
+          float r = mix(live_color.r, line_color.r, f_index);
+          float g = mix(live_color.g, line_color.g, f_index);
+          float b = mix(live_color.b, line_color.b, f_index);
+          v_color = vec3(r,g,b);
+        } else {
+          v_color = line_color;
+        }
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
       fragmentShader: `
-      uniform vec3 line_color;
+      // uniform vec3 line_color;
+       varying vec3 v_color;
       void main(){
-          gl_FragColor = vec4(line_color, 1.0);
+          gl_FragColor = vec4(v_color, 1.0);
         }  
       `,
     })
