@@ -9,6 +9,7 @@ import { Circle } from '../effect/circle'
 import { Ball } from '../effect/ball'
 import { Cone } from '../effect/cone'
 import { Fly } from '../effect/fly'
+import {Road} from "../effect/road";
 export class City{
   constructor(scene, camera) {
     this.scene = scene
@@ -47,6 +48,7 @@ export class City{
     new Ball(this.scene,this.time)
     new Cone(this.scene,this.top, this.height)
     new Fly(this.scene,this.time)
+    new Road(this.scene,this.time)
     this.addClick()
   }
   addClick () {
