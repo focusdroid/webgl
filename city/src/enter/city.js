@@ -5,6 +5,8 @@ import { SurroundLine } from '../effect/surroundLine'
 import { Backgound } from '../effect/backgound'
 import {Radar} from '../effect/radar'
 import { Wall } from '../effect/wall'
+import { Circle } from '../effect/circle'
+import { Ball } from '../effect/ball'
 export class City{
   constructor(scene, camera) {
     this.scene = scene
@@ -35,6 +37,8 @@ export class City{
     new Backgound(this.scene)
     new Radar(this.scene, this.time)
     new Wall(this.scene, this.time)
+    new Circle(this.scene,this.time)
+    new Ball(this.scene,this.time)
     this.addClick()
   }
   addClick () {

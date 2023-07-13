@@ -1,56 +1,51 @@
 import * as THREE from 'three'
-import { color } from '../config/index'
-import { Cylinder } from './cylinder'
-export class Wall{
+import { color } from '../config'
+
+export class Ball {
   constructor(scene, time) {
     this.scene = scene
     this.time = time
-
-    this.config = {
-      radius: 20000,
+    this.createSphere({
+      color: color.ball,
+      radius: 15000,
       height: 10000,
-      open: true,
-      color: color.wall,
       opacity: 0.6,
+      speed: 3.6,
       position: {
-        x: 100000,
-        y: 1000,
+        x: -70000,
+        y: 0,
         z:0,
-      },
-      speed: 2.0,
-    }
-    // this.createWall()
-    new Cylinder(this.scene, this.time).createCylinder(this.config)
+      }
+    })
   }
-  createWall(){
-    const geometry = new THREE.CylinderGeometry(
-      this.config.radius,
-      this.config.radius,
-      this.config.height,
-      32,1,
-      this.config.open
+  createSphere (options) {
+    const geometry = new THREE.SphereGeometry(
+      options.radius,32,32,Math.PI/2,Math.PI*2,0,Math.PI / 2
     )
-    geometry.translate(0, this.config.height/ 2, 0)
     // 创建材质
     const material = new THREE.ShaderMaterial({
       uniforms: {
         u_color: {
-          value: new THREE.Color(this.config.color)
+          value: new THREE.Color(options.color)
         },
         u_height: {
-          value: this.config.height
+          value: options.height
         },
         u_opacity: {
-          value: this.config.opacity
+          value: options.opacity
+        },
+        u_speed: { // 扩散源扩散速度
+          value: options.speed,
         },
         u_time: this.time,
       },
       vertexShader: `
       uniform float u_time;
       uniform float u_height;
+      uniform float u_speed;
       varying float u_opacity;
         void main(){
-          vec3 v_position = position * mod(u_time, 1.0); // 取模
+          vec3 v_position = position * mod(u_time / u_speed, 1.0); // 取模
           u_opacity = mix(1.0,0.0,position.y / u_height);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(v_position, 1.0);
         }
@@ -68,11 +63,9 @@ export class Wall{
     })
     // 创建几何体
     const mesh = new THREE.Mesh(geometry, material)
-    mesh.position.set(80000,500,0)
+    // mesh.position.set(80000,500,0)
+    mesh.position.copy(options.position)
     this.scene.add(mesh)
-  }
-  createWall2 () {
-    new Cylinder(this.scene, this.time).createCylinder(this.config.position)
-  }
 
+  }
 }

@@ -6,4 +6,6 @@ export const color = {
   liveColor: '#ffffff', // 场景扫描
   radarColor: '#ffa000', // 雷达颜色
   wall: '#fab73f', // 围墙的颜色
+  circle: '#00bbff', // 扩散源
+  ball: '#fab73f', // 扩散圆的颜色
 }
