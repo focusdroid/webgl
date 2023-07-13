@@ -8,4 +8,6 @@ export const color = {
   wall: '#fab73f', // 围墙的颜色
   circle: '#00bbff', // 扩散源
   ball: '#fab73f', // 扩散圆的颜色
+  cone: '#ffff00', // 棱锥颜色
+  fly: '#00bbff', // 射线
 }
