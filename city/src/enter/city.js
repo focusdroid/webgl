@@ -11,6 +11,7 @@ import { Cone } from '../effect/cone'
 import { Fly } from '../effect/fly'
 import {Road} from "../effect/road";
 import {Font} from "../effect/font";
+import {Snow} from "../effect/snow";
 export class City{
   constructor(scene, camera) {
     this.scene = scene
@@ -27,6 +28,7 @@ export class City{
     this.time = {
       value: 0,
     }
+    this.effect = {}
     this.loadCity()
   }
   loadCity () {
@@ -51,6 +53,8 @@ export class City{
     new Fly(this.scene,this.time)
     new Road(this.scene,this.time)
     new Font(this.scene)
+    // new Snow(this.scene)
+    // this.effect.snow = new Snow(this.scene)
     this.addClick()
   }
   addClick () {
@@ -109,6 +113,9 @@ export class City{
     }
   }
   start (delta) {
+    for (const key in this.effect) {
+      this.effect[key] && this.effect[key].animation()
+    }
     if (this.tweenPosition && this.tweenRotation) {
       this.tweenPosition.update()
       this.tweenRotation.update()

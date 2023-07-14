@@ -15,11 +15,11 @@ export class Font{
   }
   init () {
     const loader = new FontLoader()
-    loader.load('./iconfont.json', (font) =>{
+   /* loader.load('./iconfont.json', (font) =>{
       this.font = font
       // 创建字体几何体
       this.createTextQueue()
-    })
+    })*/
   }
   createTextQueue () {
     [
