@@ -10,6 +10,7 @@ import { Ball } from '../effect/ball'
 import { Cone } from '../effect/cone'
 import { Fly } from '../effect/fly'
 import {Road} from "../effect/road";
+import {Font} from "../effect/font";
 export class City{
   constructor(scene, camera) {
     this.scene = scene
@@ -49,6 +50,7 @@ export class City{
     new Cone(this.scene,this.top, this.height)
     new Fly(this.scene,this.time)
     new Road(this.scene,this.time)
+    new Font(this.scene)
     this.addClick()
   }
   addClick () {

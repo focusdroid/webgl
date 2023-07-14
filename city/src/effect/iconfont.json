@@ -1,0 +1,72 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "36430763",
+      "name": "电影院",
+      "font_class": "dianyingyuan",
+      "unicode": "e6da",
+      "unicode_decimal": 59098
+    },
+    {
+      "icon_id": "36430764",
+      "name": "餐饮",
+      "font_class": "canyin",
+      "unicode": "e6db",
+      "unicode_decimal": 59099
+    },
+    {
+      "icon_id": "36430765",
+      "name": "地铁站",
+      "font_class": "ditiezhan",
+      "unicode": "e6dc",
+      "unicode_decimal": 59100
+    },
+    {
+      "icon_id": "36430766",
+      "name": "公共厕所",
+      "font_class": "gonggongcesuo",
+      "unicode": "e6dd",
+      "unicode_decimal": 59101
+    },
+    {
+      "icon_id": "36430767",
+      "name": "大门",
+      "font_class": "damen",
+      "unicode": "e6de",
+      "unicode_decimal": 59102
+    },
+    {
+      "icon_id": "36430768",
+      "name": "酒店",
+      "font_class": "jiudian",
+      "unicode": "e6df",
+      "unicode_decimal": 59103
+    },
+    {
+      "icon_id": "36430769",
+      "name": "郊区",
+      "font_class": "jiaoqu",
+      "unicode": "e6e0",
+      "unicode_decimal": 59104
+    },
+    {
+      "icon_id": "36430770",
+      "name": "火车站",
+      "font_class": "huochezhan",
+      "unicode": "e6e1",
+      "unicode_decimal": 59105
+    },
+    {
+      "icon_id": "36430771",
+      "name": "公交站",
+      "font_class": "gongjiaozhan",
+      "unicode": "e6e2",
+      "unicode_decimal": 59106
+    }
+  ]
+}
